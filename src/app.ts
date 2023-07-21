@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
+import productRoutes from './routes/products';
 
 const app = express();
 const port = 3000;
@@ -25,9 +26,8 @@ mongoose.connect(connectionString, {
     console.error('Error connecting to MongoDB:', error);
   });
 
-// Defining routes and middleware here (after connecting to MongoDB)
-
-
+// Defining routes and middleware
+app.use('/', productRoutes);
 
 // Start the server
 app.listen(port, () => {
