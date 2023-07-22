@@ -1,3 +1,5 @@
+// Moises David Plata Server for Challenge-Back
+
 //Frameworks
 import mongoose, { ConnectOptions } from 'mongoose';
 import express from 'express';
@@ -5,6 +7,7 @@ import dotenv from "dotenv";
 
 //Routes
 import productRoutes from './routes/products';
+import router from './routes/products';
 
 // DotEnv to provide .env variables
 dotenv.config();
