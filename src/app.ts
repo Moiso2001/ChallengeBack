@@ -1,6 +1,13 @@
-import express from 'express';
+//Frameworks
 import mongoose, { ConnectOptions } from 'mongoose';
+import express from 'express';
+import dotenv from "dotenv";
+
+//Routes
 import productRoutes from './routes/products';
+
+// DotEnv to provide .env variables
+dotenv.config();
 
 const app = express();
 const port = 3000;
@@ -10,9 +17,8 @@ interface CustomConnectOptions extends ConnectOptions {
   useUnifiedTopology: boolean;
 }
 
-// MongoDB connection string (replace "<password>" with the actual password)
-const connectionString =
-  'mongodb://drenvio:moM5f3AodwLE5d0A@ac-aemgtkt-shard-00-00.unqyghm.mongodb.net:27017,ac-aemgtkt-shard-00-01.unqyghm.mongodb.net:27017,ac-aemgtkt-shard-00-02.unqyghm.mongodb.net:27017/?replicaSet=atlas-y8oxsk-shard-0&ssl=true&authSource=admin';
+// MongoDB connection string
+const connectionString = `mongodb://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@ac-aemgtkt-shard-00-00.unqyghm.mongodb.net:27017,ac-aemgtkt-shard-00-01.unqyghm.mongodb.net:27017,ac-aemgtkt-shard-00-02.unqyghm.mongodb.net:27017/?replicaSet=atlas-y8oxsk-shard-0&ssl=true&authSource=admin`;
 
 // Connect to MongoDB using the custom type
 mongoose.connect(connectionString, {
@@ -26,7 +32,11 @@ mongoose.connect(connectionString, {
     console.error('Error connecting to MongoDB:', error);
   });
 
-// Defining routes and middleware
+
+// Middlewares
+app.use(express.json());
+
+// Defining routes
 app.use('/', productRoutes);
 
 // Start the server

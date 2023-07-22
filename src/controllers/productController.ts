@@ -77,3 +77,35 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
     res.status(500).json({ message: 'Error adding the product to the database.', error });
   }
 };
+
+export const setSpecialPrice = async (req: Request, res: Response): Promise<void> => {
+  const { userId, productName, specialPrice } = req.body;
+
+  // Validate the required fields
+  if (!userId || !productName || specialPrice === undefined) {
+    res.status(400).json({ error: 'Please provide userId, productName, and specialPrice in the request body.' });
+    return;
+  }
+
+  try {
+    // Find the product by name
+    const product: ProductDoc | null = await Product.findOne({ name: productName });
+    if (!product) {
+      res.status(404).json({ error: 'Product not found.' });
+      return;
+    }
+
+    // Add or update the special price for the given user
+    product.specialPrices = {
+      ...product.specialPrices,
+      [userId]: specialPrice,
+    };
+
+    // Save the updated product to the database
+    await product.save();
+
+    res.status(200).json({ message: `Special price for ${productName} set for user ${userId}.`, product });
+  } catch (error) {
+    res.status(500).json({ error: 'Error setting the special price in the database.' });
+  }
+};
