@@ -10,7 +10,7 @@ import productRoutes from './routes/products';
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // PORT provided by Railway
 
 // Defining custom type including 'useUnifiedTopology' option
 interface CustomConnectOptions extends ConnectOptions {
@@ -41,5 +41,5 @@ app.use('/', productRoutes);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on ${process.env.RAILWAY_URL}:${process.env.PORT}`);
 });
