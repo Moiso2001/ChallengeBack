@@ -74,7 +74,7 @@ export const addProduct = async (req: Request, res: Response): Promise<void> => 
 
     res.status(201).json({ message: 'Product added successfully.', product: newProduct });
   } catch (error) {
-    res.status(500).json({ message: 'Error adding the product to the database.', error });
+    res.status(500).json({ message: 'An error ocurred on DB', error });
   }
 };
 
@@ -106,6 +106,6 @@ export const setSpecialPrice = async (req: Request, res: Response): Promise<void
 
     res.status(200).json({ message: `Special price for ${productName} set for user ${userId}.`, product });
   } catch (error) {
-    res.status(500).json({ error: 'Error setting the special price in the database.' });
+    res.status(500).json({ message: 'An error ocurred on DB', error });
   }
 };
