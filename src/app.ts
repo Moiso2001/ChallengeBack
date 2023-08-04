@@ -35,7 +35,7 @@ mongoose.connect(connectionString, {
     console.error('Error connecting to MongoDB:', error);
   });
 
-//Tes
+//
 // Middlewares
 app.use(express.json());
 
